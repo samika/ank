@@ -1,5 +1,6 @@
 <?php
 
+
 class SiteTableSeeder extends Seeder {
 
 	/**

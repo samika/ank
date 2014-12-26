@@ -9,7 +9,7 @@ class SiteController extends \BaseController {
 	 */
 	public function index()
 	{
-		$sites = [];
+		$sites = Site::all();
 
 		return Response::json($sites);
 	}
@@ -22,7 +22,7 @@ class SiteController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		Site::updateOrCreate(Request::all());
 	}
 
 
@@ -33,7 +33,7 @@ class SiteController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		Site::updateOrCreate(Request::all());
 	}
 
 
@@ -45,7 +45,13 @@ class SiteController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$site = Site::find($id);
+		if (!$site) {
+			App::abort(404,'Site not found.');
+		}
+
+		return Response::json($site);
+
 	}
 
 
@@ -57,7 +63,7 @@ class SiteController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		die('What is this for?');
 	}
 
 
@@ -69,7 +75,14 @@ class SiteController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$site = Site::find($id);
+		if (!$site) {
+			App::abort(404,'Site not found.');
+		}
+
+		// update stuff
+
+		$site->store();
 	}
 
 
@@ -83,6 +96,5 @@ class SiteController extends \BaseController {
 	{
 		//
 	}
-
 
 }
