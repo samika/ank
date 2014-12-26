@@ -1,5 +1,7 @@
 <?php
 
+use Jenssegers\Mongodb\Model as Eloquent;
+
 class Site extends Eloquent {
 
 	/**
@@ -15,5 +17,11 @@ class Site extends Eloquent {
 	 * @var array
 	 */
 	protected $hidden = [];
+
+	protected $connection = 'mongodb';
+
+	protected static $unguarded = true;
+
+	protected $collection = 'site';
 
 }

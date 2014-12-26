@@ -42,6 +42,14 @@ return array(
 			'schema'   => 'public',
 		),
 
+		'mongodb' => [
+			'driver'   => 'mongodb',
+			'host'     => 'localhost',
+			'port'     => 27017,
+			'database' => 'ank'
+		],
+
+
 	),
 
 );

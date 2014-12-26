@@ -14,7 +14,6 @@ class CreateSiteTable extends Migration {
 	{
 		Schema::table('site', function(Blueprint $table)
 		{
-			$table->increments('id');
 			$table->string('name');
 			$table->string('party');
 			$table->string('area');
@@ -22,7 +21,7 @@ class CreateSiteTable extends Migration {
 			$table->string('url');
 			$table->string('rssUrl');
 			$table->string('platform');
-			$table->string('lastUpdate');
+			$table->dateTime('lastUpdate');
 			$table->string('contentSelector');
 			$table->boolean('elected');
 		});
