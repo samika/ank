@@ -10,7 +10,7 @@ class UserTableSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		DB::table('sites')->delete();
+		DB::table('user')->delete();
 		Site::create([
 			'username' => 'admin',
 			'password' => 'password',
