@@ -16,6 +16,7 @@ class CreatePostTable extends Migration {
 			$table->string('site');
 			$table->dateTime('storedAt');
 			$table->dateTime('lastCheckAt');
+			$table->integer('checkCount');
 			$table->integer('modificationCount');
 			$table->string('checksum');
 			$table->string('title');

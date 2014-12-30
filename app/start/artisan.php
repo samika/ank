@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new FeedCommand());
+Artisan::add(new PostCommand());
