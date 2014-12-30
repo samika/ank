@@ -190,7 +190,12 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'JWTAuth' 			=> 'Tymon\JWTAuth\Facades\JWTAuth',
-
 	),
+
+	'rabbitmq' => [
+		'post_pool' => 'post',
+		'feed_pool'	=> 'feed',
+		'host' => 'localhost',
+	]
 
 );
