@@ -43,6 +43,11 @@ class PostVersionController extends \BaseController {
 			}
 		}
 
+		$post = Post::find($postVersion->id);
+		if (!$post) {
+			App:abort(400);
+		}
+
 		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->rawBody)) {
 			App::abort(400);
 		}
@@ -53,12 +58,16 @@ class PostVersionController extends \BaseController {
 
 		$postVersion->storedAt = new \DateTime();
 		$postVersion->updatedAt = null;
-		$postVersion->modificationCount = 0;
-
 		//Fix this when we have authentication middleware
 		$post->producedBy = 'admin';
 
+		// Update the post with current values.
 		$postVersion->save();
+		$post->checkCount = ((int) $post->checkCount) + 1;
+		$post->content = $postVersion->content;
+		$post->title = $postVersion->title;
+		$post->store();
+
 		return Response::make('', 201);
 	}
 
