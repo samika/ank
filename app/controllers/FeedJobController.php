@@ -4,7 +4,7 @@ use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage as AMQPMessage;
 
 
-class JobController extends \BaseController {
+class FeedJobController extends \BaseController {
 
 	/**
 	 * Return new job.
