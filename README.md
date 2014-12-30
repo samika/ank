@@ -1,2 +1,2 @@
-## Automatic Netti-Karpo
+## Automaattinen Netti-Karpo
 Diipi daapi.
