@@ -22,7 +22,7 @@ class PostController extends \BaseController {
 	 */
 	public function create()
 	{
-		Post::updateOrCreate(Request::all());
+		print "huh?";
 	}
 
 
@@ -33,7 +33,27 @@ class PostController extends \BaseController {
 	 */
 	public function store()
 	{
-		Post::updateOrCreate(Request::all());
+		$post = null;
+		// TODO: this feels stupid.. find out is there better way to do this.
+		$jsonString = Request::instance()->getContent();
+		if (!empty($jsonString)) {
+			$assoc = json_decode($jsonString, true);
+			if ($assoc) {
+				$post = new Post($assoc);
+			}
+		}
+
+		if (!$post) {
+			App::abort(400);
+		}
+
+		if (Post::where('url','=',$post->url)->count() !== 0) {
+			App::abort(208);
+		}
+		$post->save();
+		return Response::make('', 201);
+
+
 	}
 
 
