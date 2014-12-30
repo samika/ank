@@ -50,10 +50,13 @@ class PostController extends \BaseController {
 		if (Post::where('url','=',$post->url)->count() !== 0) {
 			App::abort(208);
 		}
+
+		$post->lastCheckAt = null;
+		$post->storedAt = new \DateTime();
+		$post->updatedAt = null;
+		$post->modificationCount = 0;
 		$post->save();
 		return Response::make('', 201);
-
-
 	}
 
 
