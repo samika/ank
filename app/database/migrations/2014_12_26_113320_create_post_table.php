@@ -21,6 +21,7 @@ class CreatePostTable extends Migration {
 			$table->string('title');
 			$table->string('content');
 			$table->string('url')->unique();
+			$table->dateTime('nextCheckAt');
 		});
 
 	}

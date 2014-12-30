@@ -53,6 +53,7 @@ class PostController extends \BaseController {
 
 		$post->lastCheckAt = null;
 		$post->storedAt = new \DateTime();
+		$post->nextCheckAt = new \DateTime();
 		$post->updatedAt = null;
 		$post->modificationCount = 0;
 		$post->save();
