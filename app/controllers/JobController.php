@@ -1,7 +1,7 @@
 <?php
 
 use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Message\AMQPMessage as AMQPMessage;
 
 
 class JobController extends \BaseController {
@@ -13,7 +13,18 @@ class JobController extends \BaseController {
 	 */
 	public function index()
 	{
-		$connection = new AMQPConnection();
+		$connection = new AMQPConnection(
+			Config::get('job.host'),
+			Config::get('job.port'),
+			Config::get('job.user'),
+			Config::get('job.password'));
+		$channel = $connection->channel();
+
+		$message =  $channel->basic_get('feed', true);
+		if ($message) {
+			return $message->body;
+		}
+		return "{}";
 
 	}
 
