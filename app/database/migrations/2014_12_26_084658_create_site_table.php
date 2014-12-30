@@ -20,6 +20,7 @@ class CreateSiteTable extends Migration {
 			$table->string('number');
 			$table->string('url');
 			$table->string('rssUrl');
+			$table->string('rssChecksum');
 			$table->string('platform');
 			$table->dateTime('lastUpdate');
 			$table->string('contentSelector');

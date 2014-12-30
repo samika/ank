@@ -20,6 +20,7 @@ class CreatePostTable extends Migration {
 			$table->string('checksum');
 			$table->string('title');
 			$table->string('content');
+			$table->string('url')->unique();
 		});
 
 	}
