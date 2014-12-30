@@ -22,7 +22,7 @@ class PostVersionController extends \BaseController {
 	 */
 	public function create()
 	{
-		PostVersion::updateOrCreate(Request::all());
+		die('Huu.');
 	}
 
 
@@ -33,7 +33,33 @@ class PostVersionController extends \BaseController {
 	 */
 	public function store()
 	{
-		PostVersion::updateOrCreate(Request::all());
+		$postVersion = null;
+		// TODO: this feels stupid.. find out is there better way to do this.
+		$jsonString = Request::instance()->getContent();
+		if (!empty($jsonString)) {
+			$assoc = json_decode($jsonString, true);
+			if ($assoc) {
+				$post = new PostVersion($assoc);
+			}
+		}
+
+		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->rawBody)) {
+			App::abort(400);
+		}
+		if (PostVersion::where('url','=',$postVersion->url)
+				->where('checksum', '=', $postVersion->checksum)->count() !== 0) {
+			App::abort(208);
+		}
+
+		$postVersion->storedAt = new \DateTime();
+		$postVersion->updatedAt = null;
+		$postVersion->modificationCount = 0;
+
+		//Fix this when we have authentication middleware
+		$post->producedBy = 'admin';
+
+		$postVersion->save();
+		return Response::make('', 201);
 	}
 
 
