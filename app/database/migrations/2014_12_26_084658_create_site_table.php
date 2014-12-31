@@ -23,7 +23,7 @@ class CreateSiteTable extends Migration {
 			$table->string('rssChecksum');
 			$table->string('platform');
 			$table->dateTime('lastUpdate');
-			$table->string('contentSelector');
+			$table->string('xpath');
 			$table->boolean('elected');
 		});
 	}
