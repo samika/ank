@@ -57,7 +57,7 @@ class PostCommand extends Command {
 		$channel->queue_declare('post', false, false, false, false);
 
 		/** @var $site Site */
-		foreach ($posts as $site) {
+		foreach ($posts as $post) {
 			$message = new AMQPMessage(
 				json_encode(
 				[
@@ -65,12 +65,13 @@ class PostCommand extends Command {
 					'checksum' => $post->checksum,
 					'post' => $post->_id,
 					'site' => $post->site,
+					'xpath' => $post->contentSelector,
 				]
 			));
-			$channel->basic_publish($message, '', 'feed');
+			$channel->basic_publish($message, '', 'post');
 			$post->lastUpdate = $now->format('Y-m-d H:i:s');
 			$minutes = pow(2, max([1,min([11, $post->checkCount])]));
-			$post->nextUpdate = new \DateTime('+{$minutes} minutes');
+			$post->nextUpdate = new \DateTime("+{$minutes} minutes");
 			$post->save();
 		}
 		$channel->close();
