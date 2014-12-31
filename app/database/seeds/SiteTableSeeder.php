@@ -20,7 +20,7 @@ class SiteTableSeeder extends Seeder {
 			'rssUrl' => 'http://www.alexstubb.com/?feed=rss2&lang=fi',
 			'platform' => 'wordpress',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => 'article',
+			'xpath' => '//div[@class="entry-content clearfix"]',
 			'elected' => true,
 		]);
 		Site::create([
@@ -32,7 +32,7 @@ class SiteTableSeeder extends Seeder {
 			'rssUrl' => 'http://www.villeniinisto.fi/ajankohtaista/17-blogit?format=feed&type=rss',
 			'platform' => 'joomla',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => '.article-content',
+			'xpath' => '//*[@id="componentWrap"]/div[2]/div/div[@class="article-content"]',
 			'elected' => true,
 		]);
 		Site::create([
@@ -44,7 +44,7 @@ class SiteTableSeeder extends Seeder {
 			'rssUrl' => 'https://kotisivukone.fi/app/feed/rss2.0/juhasipila.kotisivukone.com?blog',
 			'platform' => 'kotisivukone',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => '#content1',
+			'xpath' => '//div[@id="content1"]',
 			'elected' => true,
 		]);
 		Site::create([
@@ -56,7 +56,7 @@ class SiteTableSeeder extends Seeder {
 			'rssUrl' => 'http://timosoini.fi/feed/',
 			'platform' => 'wordpress',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => 'article',
+			'xpath' => '//div[@id="content"]/article/div[@class="entry-content"]',
 			'elected' => true,
 		]);
 		Site::create([
@@ -68,7 +68,7 @@ class SiteTableSeeder extends Seeder {
 			'rssUrl' => 'http://www.paivirasanen.fi/feed/',
 			'platform' => 'wordpress',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => '#content article',
+			'xpath' => '//div[@id="content"]/article/div[@class="entry-content"]',
 			'elected' => true,
 		]);
 		Site::create([
@@ -77,10 +77,10 @@ class SiteTableSeeder extends Seeder {
 			'area' => 'HELSINKI',
 			'number' => '',
 			'url' => 'http://www.paavoarhinmaki.fi/',
-			'rssUrl' => 'view-source:http://feeds.feedburner.com/arhinmaki?format=xml',
+			'rssUrl' => 'http://feeds.feedburner.com/arhinmaki?format=xml',
 			'platform' => 'kelvin.fi',
 			'lastUpdate' => '2014-01-01 00:00:00',
-			'contentSelector' => '.entry-content',
+			'xpath' => '//div[@class="entry-content"]',
 			'elected' => true,
 		]);
 
