@@ -6,5 +6,6 @@ Route::group(array('prefix' => 'api/v1'), function()
 	Route::resource('post', 'PostController');
 	Route::resource('post-version', 'PostVersionController');
 	Route::resource('feedjob', 'FeedJobController');
+	Route::resource('postjob', 'PostJobController');
 
 });
