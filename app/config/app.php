@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Tymon\JWTAuth\JWTAuthServiceProvider',
+		'TwigBridge\ServiceProvider',
 	),
 
 	/*
@@ -190,6 +191,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'JWTAuth' 			=> 'Tymon\JWTAuth\Facades\JWTAuth',
+		'Twig' 				=> 'TwigBridge\Facade\Twig',
 	),
 
 	'rabbitmq' => [
