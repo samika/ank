@@ -61,6 +61,7 @@ class PostController extends \BaseController {
 		$post->updatedAt = null;
 		$post->modificationCount = 0;
 		$post->save();
+
 		return Response::make('', 201);
 	}
 

@@ -44,9 +44,11 @@ class FeedCommand extends Command {
 		$now = new DateTime();
 
 		$sites = Site::whereNotNull('rssUrl')
-			->where('lastUpdate', '<', $updateDt->format('Y-m-d H:i:s'))
+			->where('lastUpdate', '<', $updateDt)
 			->orderBy('lastUpdate','desc')
 			->get();
+
+		print $sites->count() . ' Entries will be added to queue' . PHP_EOL;
 
 		$connection = new AMQPConnection(
 			Config::get('job.host'),
@@ -61,8 +63,8 @@ class FeedCommand extends Command {
 		foreach ($sites as $site) {
 			$message = new AMQPMessage(json_encode($site));
 			$channel->basic_publish($message, '', 'feed');
-			$site->lastUpdate = $now->format('Y-m-d H:i:s');
-			$site->save();
+			$site->lastUpdate = $now;
+			$site->update();
 		}
 		$channel->close();
 		$connection->close();

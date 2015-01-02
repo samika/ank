@@ -24,4 +24,6 @@ class Site extends Eloquent {
 
 	protected $collection = 'site';
 
+	protected $dates = ['lastUpdate', ];
+
 }

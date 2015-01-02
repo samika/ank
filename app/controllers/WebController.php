@@ -24,10 +24,11 @@ class WebController extends \BaseController {
 		if (!$site) {
 			return Response::make('Site not found.',404);
 		}
-
 		$posts = Post::where('site', '=', $site->_id)->get();
-		return View::make('index', ['posts' => $posts]);
+
+		return View::make('site', [
+			'posts' => $posts,
+			'site'	=> $site,
+		]);
 	}
-
-
 }

@@ -24,4 +24,5 @@ class PostVersion extends Eloquent {
 
 	protected $collection = 'postVersion';
 
+	protected $dates = ['storedAt'];
 }

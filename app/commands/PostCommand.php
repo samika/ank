@@ -44,8 +44,10 @@ class PostCommand extends Command {
 		$now = new DateTime();
 
 		$posts = Post::whereNotNull('url')
-			->where('nextCheckAt', '<', $updateDt->format('Y-m-d H:i:s'))
+			->where('nextCheckAt', '<', $updateDt)
 			->get();
+
+		print $posts->count() . ' Entries will be added to queue' . PHP_EOL;
 
 		$connection = new AMQPConnection(
 			Config::get('job.host'),
@@ -69,10 +71,10 @@ class PostCommand extends Command {
 				]
 			));
 			$channel->basic_publish($message, '', 'post');
-			$post->lastUpdate = $now->format('Y-m-d H:i:s');
+			$post->lastUpdate = $now;
 			$minutes = pow(2, max([1,min([11, $post->checkCount])]));
 			$post->nextCheckAt = new \DateTime("+{$minutes} minutes");
-			$post->save();
+			$post->update();
 		}
 		$channel->close();
 		$connection->close();

@@ -24,4 +24,6 @@ class Post extends Eloquent {
 
 	protected $collection = 'post';
 
+	protected $dates = ['storedAt', 'lastCheckAt', 'nextCheckAt'];
+
 }

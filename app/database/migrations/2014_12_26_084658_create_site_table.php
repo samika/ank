@@ -18,8 +18,8 @@ class CreateSiteTable extends Migration {
 			$table->string('party');
 			$table->string('area');
 			$table->string('number');
-			$table->string('url');
-			$table->string('rssUrl');
+			$table->string('url')->unique();
+			$table->string('rssUrl')->unique();
 			$table->string('rssChecksum');
 			$table->string('platform');
 			$table->dateTime('lastUpdate');
