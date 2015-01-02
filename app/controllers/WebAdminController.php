@@ -54,7 +54,9 @@ class WebAdminController extends \BaseController {
 			$site->update($data);
 			$site->save();
 		} else {
+			$data['lastUpdate'] = new \DateTime();
 			$site = Site::create($data);
+
 		}
 		return Redirect::to('/admin/site/' . $site->_id)->with('message', 'Tallennus onnistui')->with('success', true);
 
@@ -84,6 +86,24 @@ class WebAdminController extends \BaseController {
 		$connection->close();
 
 		return Redirect::to('/admin/')->with('message', 'Tehtävä lisätty jonoon')->with('success', true);
+
+	}
+	public function removeFeedQueue($id)
+	{
+		$site = Site::find($id);
+		if (!$site) {
+			App::abort(404);
+		}
+		$site->lastUpdate = null;
+		$site->update();
+
+		$posts = Post::where('site', '=', $site->_id);
+		foreach ($posts as $post) {
+			$post->nextCheckAt = null;
+			$post->update();
+		}
+
+		return Redirect::to('/admin/')->with('message', 'Tehtävä poistettu jonosta')->with('success', true);
 
 	}
 }

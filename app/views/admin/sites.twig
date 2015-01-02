@@ -20,7 +20,9 @@
                 <td>{{ site.party }}</td>
                 <td>{{ site.area }}</td>
                 <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
-                <td>{% if site.rssUrl %}<a href="/admin/feedqueue/add/{{ site._id }}/" class="glyphicon glyphicon-repeat" alt="Laita jonoon"></a>{% endif %}</td>
+                <td>
+                    <a href="/admin/feedqueue/remove/{{ site._id }}/" class="glyphicon glyphicon-ban-circle" alt="Poista jonosta"></a>
+                    {% if site.rssUrl %}<a href="/admin/feedqueue/add/{{ site._id }}/" class="glyphicon glyphicon-repeat" alt="Laita jonoon"></a>{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>
