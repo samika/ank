@@ -30,7 +30,32 @@ class WebAdminController extends \BaseController {
 			App::abort(404);
 		}
 
-		return View::make('admin/edit-site', ['site' => $site]);
+		$message = Input::get('message', '');
+		$success = Input::get('message', true);
+
+		$viewParameters = [
+			'site' => $site,
+			'message' => $message,
+			'success' => $success,
+		];
+
+
+		return View::make('admin/edit-site', $viewParameters);
+	}
+
+	public function submitSite()
+	{
+		$data = Input::only(['name', 'area', 'party', 'area', 'number', 'url', 'rssUrl','xpath', 'platform']);
+		$id = Input::get('_id', null);
+		if ($id) {
+			$site = Site::find($id);
+			$site->update($data);
+			$site->save();
+		} else {
+			$site = Site::create($data);
+		}
+		return Redirect::to('/admin/site/' . $site->_id)->with('message', 'Tallennus onnistui')->with('success', true);
+
 	}
 
 }
