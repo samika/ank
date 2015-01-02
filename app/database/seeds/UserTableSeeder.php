@@ -11,14 +11,14 @@ class UserTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::table('user')->delete();
-		Site::create([
+		User::create([
 			'username' => 'admin',
-			'password' => 'password',
+			'password' =>  Hash::make('password'),
 			'role' => 'Administrator'
 		]);
-		Site::create([
+		User::create([
 			'username' => 'producer',
-			'password' => 'password',
+			'password' => Hash::make('password'),
 			'role' => 'Producer'
 		]);
 
