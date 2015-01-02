@@ -17,7 +17,33 @@ Route::filter('authProducer', function() {
 	}
 });
 
-// Routes that requires authentication
+
+// Admin interface routes
+Route::get('/login', function()
+{
+	return View::make('login');
+});
+Route::post('/login', function()
+{
+	if (Auth::check()) {
+		return;
+	}
+
+	$credentials = Input::only('username', 'password');
+	$credentials['role'] = 'Administrator';
+	if (Auth::attempt($credentials)) {
+		return Redirect::intended('admin');
+	}
+
+	return View::make('login', ['message' => 'Vituiks meni.']);
+});
+
+Route::group(['prefix' => '/admin', 'before' => 'auth'], function() {
+	Route::get('/', 'WebAdminController@index');
+});
+
+
+// API Routes that requires authentication
 Route::group(['prefix' => 'api/v1', 'before' => 'authProducer'], function()
 {
 	Route::resource('site', 'SiteController');

@@ -1,0 +1,25 @@
+
+<div class="row"><a href="/site/" class="glyphicon glyphicon-plus">Lisää</a></div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Sivusto</th>
+        <th>Viimeinen tarkastus</th>
+        <th>Puolue</th>
+        <th>Vaalipiiri</th>
+        <th>Linkki</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for site in sites %}
+            <tr>
+                <td><a href="/admin/site/{{ site._id }}/">{{ site.name }}</a></td>
+                <td>{{ site.updated_at }}</td>
+                <td>{{ site.party }}</td>
+                <td>{{ site.area }}</td>
+                <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
