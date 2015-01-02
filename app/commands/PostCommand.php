@@ -44,7 +44,7 @@ class PostCommand extends Command {
 		$now = new DateTime();
 
 		$posts = Post::whereNotNull('url')
-			->where('nextCheckAt', '<=', $updateDt->format('Y-m-d H:i:s'))
+			->where('nextCheckAt', '<', $updateDt->format('Y-m-d H:i:s'))
 			->get();
 
 		$connection = new AMQPConnection(
@@ -65,13 +65,13 @@ class PostCommand extends Command {
 					'checksum' => $post->checksum,
 					'post' => $post->_id,
 					'site' => $post->site,
-					'xpath' => $post->contentSelector,
+					'xpath' => $post->xpath,
 				]
 			));
 			$channel->basic_publish($message, '', 'post');
 			$post->lastUpdate = $now->format('Y-m-d H:i:s');
 			$minutes = pow(2, max([1,min([11, $post->checkCount])]));
-			$post->nextUpdate = new \DateTime("+{$minutes} minutes");
+			$post->nextCheckAt = new \DateTime("+{$minutes} minutes");
 			$post->save();
 		}
 		$channel->close();

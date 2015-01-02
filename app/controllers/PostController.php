@@ -46,6 +46,10 @@ class PostController extends \BaseController {
 		if (!$post) {
 			App::abort(400);
 		}
+		$site = Site::find($post->site);
+		if (!$site) {
+			App::abort(400);
+		}
 
 		if (Post::where('url','=',$post->url)->count() !== 0) {
 			App::abort(208);

@@ -44,7 +44,7 @@ class FeedCommand extends Command {
 		$now = new DateTime();
 
 		$sites = Site::whereNotNull('rssUrl')
-			->where('lastUpdate', '<=', $updateDt->format('Y-m-d H:i:s'))
+			->where('lastUpdate', '<', $updateDt->format('Y-m-d H:i:s'))
 			->orderBy('lastUpdate','desc')
 			->get();
 
