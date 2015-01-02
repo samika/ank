@@ -60,6 +60,7 @@ class PostCommand extends Command {
 
 		/** @var $site Site */
 		foreach ($posts as $post) {
+			$site = Site::find($post->site);
 			$message = new AMQPMessage(
 				json_encode(
 				[
@@ -67,7 +68,7 @@ class PostCommand extends Command {
 					'checksum' => $post->checksum,
 					'post' => $post->_id,
 					'site' => $post->site,
-					'xpath' => $post->xpath,
+					'xpath' => $site->xpath,
 				]
 			));
 			$channel->basic_publish($message, '', 'post');
