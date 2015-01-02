@@ -39,20 +39,20 @@ class PostVersionController extends \BaseController {
 		if (!empty($jsonString)) {
 			$assoc = json_decode($jsonString, true);
 			if ($assoc) {
-				$post = new PostVersion($assoc);
+				$postVersion = new PostVersion($assoc);
 			}
 		}
 
-		$post = Post::find($postVersion->id);
+		$post = Post::find($postVersion->post);
 		if (!$post) {
 			App:abort(400);
 		}
 
-		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->rawBody)) {
+		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->content)) {
 			App::abort(400);
 		}
 		if (PostVersion::where('url','=',$postVersion->url)
-				->where('checksum', '=', $postVersion->checksum)->count() !== 0) {
+				->where('checksum', '=', $postVersion->checksum)->get()->count() !== 0) {
 			App::abort(208);
 		}
 
@@ -65,8 +65,8 @@ class PostVersionController extends \BaseController {
 		$postVersion->save();
 		$post->checkCount = ((int) $post->checkCount) + 1;
 		$post->content = $postVersion->content;
-		$post->title = $postVersion->title;
-		$post->store();
+		// $post->title = $postVersion->title; - Lets have original for now.
+		$post->save();
 
 		return Response::make('', 201);
 	}
