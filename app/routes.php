@@ -25,8 +25,9 @@ Route::group(['prefix' => 'api/v1', 'before' => 'authProducer'], function()
 
 Route::post('/api/v1/auth', function() {
 	$credentials = Input::only('username', 'password');
-	if (!$token = JWTAuth::attempt($credentials)) {
+	$token = JWTAuth::attempt($credentials);
+	if (!$token) {
 		return Response::make('' ,401);
 	}
-	return Response::json(compact('token'));
+	return Response::json(['token' => $token]);
 });
