@@ -43,8 +43,12 @@ Route::group(['prefix' => '/admin', 'before' => 'auth'], function() {
 	Route::get('/site', 'WebAdminController@editSite');
 	Route::post('/site', 'WebAdminController@submitSite');
 	Route::get('/site/{id}/', 'WebAdminController@editSite');
+	Route::get('/posts/{id}/', 'WebAdminController@viewPosts');
 	Route::get('/feedqueue/add/{id}/', 'WebAdminController@addFeedQueue');
 	Route::get('/feedqueue/remove/{id}/', 'WebAdminController@removeFeedQueue');
+	Route::get('/postqueue/add/{id}/', 'WebAdminController@addPostQueue');
+	Route::get('/postqueue/remove/{id}/', 'WebAdminController@removePostQueue');
+	Route::get('/reset/update-interval/{id}/', 'WebAdminController@resetUpdateInterval');
 });
 
 

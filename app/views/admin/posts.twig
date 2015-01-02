@@ -1,0 +1,28 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Postaus</th>
+        <th>Viimeinen tarkastus</th>
+        <th>Seuraava tarkastus</th>
+        <th>Tarkastus lkm / muutokset</th>
+        <th>Linkki</th>
+        <th>Toiminnot</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>-</td>
+                <td>{{ post.nextCheckAt }}</td>
+                <td>{{ post.checkCount }} / {{ post.modificationCount }}</td>
+                <td>{{ post.url }}</td>
+                <td>
+                    <a href="/admin/postqueue/remove/{{ post._id }}/" class="glyphicon glyphicon-ban-circle" alt="Poista jonosta"></a>
+                    <a href="/admin/postqueue/add/{{ post._id }}/" class="glyphicon glyphicon-repeat" alt="Laita jonoon"></a>
+                    <a href="/admin/reset/update-interval/{{ post._id }}/" class="glyphicon glyphicon-upload" alt="Resetoi päivitysintervalli"></a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

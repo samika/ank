@@ -15,12 +15,13 @@
     <tbody>
         {% for site in sites %}
             <tr>
-                <td><a href="/admin/site/{{ site._id }}/">{{ site.name }}</a></td>
+                <td><a href="/admin/posts/{{ site._id }}/">{{ site.name }}</a></td>
                 <td>{{ site.lastUpdate }}</td>
                 <td>{{ site.party }}</td>
                 <td>{{ site.area }}</td>
                 <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
                 <td>
+                    <a href="/admin/site/{{ site._id }}/" class="glyphicon glyphicon-edit" alt="Muokkaa blogia"></a>
                     <a href="/admin/feedqueue/remove/{{ site._id }}/" class="glyphicon glyphicon-ban-circle" alt="Poista jonosta"></a>
                     {% if site.rssUrl %}<a href="/admin/feedqueue/add/{{ site._id }}/" class="glyphicon glyphicon-repeat" alt="Laita jonoon"></a>{% endif %}</td>
             </tr>

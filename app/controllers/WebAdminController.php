@@ -16,6 +16,22 @@ class WebAdminController extends \BaseController {
 	}
 
 	/**
+	 * Display a listing of all posts.
+	 *
+	 * @return Response
+	 */
+	public function viewPosts($id)
+	{
+		$site = Site::find($id);
+		if (!$site) {
+			App:abort(404);
+		}
+		$posts = Post::where('site', '=', $id)->get();
+		return View::make('admin/site-details', ['site' => $site, 'posts' => $posts]);
+	}
+
+
+	/**
 	 * Edit site
 	 *
 	 * @return Response
@@ -84,10 +100,10 @@ class WebAdminController extends \BaseController {
 		$site->update();
 		$channel->close();
 		$connection->close();
-
 		return Redirect::to('/admin/')->with('message', 'Tehtävä lisätty jonoon')->with('success', true);
-
 	}
+
+
 	public function removeFeedQueue($id)
 	{
 		$site = Site::find($id);
@@ -106,4 +122,67 @@ class WebAdminController extends \BaseController {
 		return Redirect::to('/admin/')->with('message', 'Tehtävä poistettu jonosta')->with('success', true);
 
 	}
+
+	public function removePostQueue($id)
+	{
+		$post = Post::find($id);
+		if (!$post) {
+			App::abort(404);
+		}
+		$post->nextCheckAt = null;
+		$post->update();
+		return Redirect::to('/admin/posts/'. $post->site . '/')->with('message', 'Tehtävä poistettu jonosta')->with('success', true);
+	}
+
+	public function addPostQueue($id)
+	{
+		$post = Post::find($id);
+		if (!$post) {
+			App::abort(404);
+		}
+		$site = Site::find($post->site);
+		if (!$site) {
+			App::abort(404);
+		}
+		$post->nextCheckAt = new \DateTime('-1 seconds');;
+		// We do not increase the count for purpose.
+		$post->update();
+
+		$connection = new AMQPConnection(
+			Config::get('job.host'),
+			Config::get('job.port'),
+			Config::get('job.user'),
+			Config::get('job.password'));
+
+		$channel = $connection->channel();
+		$channel->queue_declare('post', false, false, false, false);
+
+		$message = new AMQPMessage(
+			json_encode(
+				[
+					'url' => $post->url,
+					'checksum' => $post->checksum,
+					'post' => $post->_id,
+					'site' => $post->site,
+					'xpath' => $site->xpath,
+				]
+			));
+
+		$channel->basic_publish($message, '', 'post');
+		$channel->close();
+		$connection->close();
+		return Redirect::to('/admin/posts/'. $post->site . '/')->with('message', 'Tehtävä lisätty jonoon')->with('success', true);
+	}
+
+	public function resetUpdateInterval($id)
+	{
+		$post = Post::find($id);
+		if (!$post) {
+			App::abort(404);
+		}
+		$post->checkCount = 1;
+		$post->update();
+		return Redirect::to('/admin/posts/'. $post->site . '/')->with('message', 'Tehtävä poistettu jonosta')->with('success', true);
+	}
+
 }
