@@ -19,6 +19,7 @@ class FeedJobController extends \BaseController {
 			Config::get('job.user'),
 			Config::get('job.password'));
 		$channel = $connection->channel();
+		$channel->queue_declare('feed', false, false, false, false);
 
 		$message =  $channel->basic_get('feed', true);
 		if ($message) {
