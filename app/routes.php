@@ -12,16 +12,23 @@ Route::filter('authProducer', function() {
 	}
 });
 
-Route::when('/api/v1/feedjob', 'authProducer');
 
+// Public routes.
+Route::get('/api/v1/site', 'SiteController@index');
+Route::get('/api/v1/site/{id}', 'SiteController@show');
+Route::get('/api/v1/post-version', 'PostController@index');
+Route::get('/api/v1/post-version/{id}', 'PostController@show');
+
+// Routes that requires authentication 
 Route::group(['prefix' => 'api/v1', 'before' => 'authProducer'], function()
 {
-	Route::resource('site', 'SiteController');
 	Route::resource('post', 'PostController');
 	Route::resource('post-version', 'PostVersionController');
 	Route::resource('feedjob', 'FeedJobController');
 	Route::resource('postjob', 'PostJobController');
 });
+
+
 
 Route::post('/api/v1/auth', function() {
 	$credentials = Input::only('username', 'password');
