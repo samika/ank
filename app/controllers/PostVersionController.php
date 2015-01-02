@@ -51,8 +51,13 @@ class PostVersionController extends \BaseController {
 		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->content)) {
 			App::abort(400);
 		}
+
+		$post->checkCount++;
+		$post->save();
+
 		if (PostVersion::where('url','=',$postVersion->url)
 				->where('checksum', '=', $postVersion->checksum)->get()->count() !== 0) {
+
 			App::abort(208);
 		}
 
@@ -63,7 +68,7 @@ class PostVersionController extends \BaseController {
 
 		// Update the post with current values.
 		$postVersion->save();
-		$post->checkCount = ((int) $post->checkCount) + 1;
+		$post->modificationCount = ((int) $post->modificationCount) + 1;
 		$post->content = $postVersion->content;
 		// $post->title = $postVersion->title; - Lets have original for now.
 		$post->save();
