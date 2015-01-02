@@ -27,4 +27,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $connection = 'mongodb';
 
 	protected $collection = 'user';
+
+	protected $fillable = array('username', 'role', 'password');
 }
