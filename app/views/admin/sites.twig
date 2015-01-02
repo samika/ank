@@ -9,16 +9,18 @@
         <th>Puolue</th>
         <th>Vaalipiiri</th>
         <th>Linkki</th>
+        <th>Toiminnot</th>
     </tr>
     </thead>
     <tbody>
         {% for site in sites %}
             <tr>
                 <td><a href="/admin/site/{{ site._id }}/">{{ site.name }}</a></td>
-                <td>{{ site.updated_at }}</td>
+                <td>{{ site.lastUpdate }}</td>
                 <td>{{ site.party }}</td>
                 <td>{{ site.area }}</td>
                 <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
+                <td>{% if site.rssUrl %}<a href="/admin/feedqueue/add/{{ site._id }}/" class="glyphicon glyphicon-repeat" alt="Laita jonoon"></a>{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>

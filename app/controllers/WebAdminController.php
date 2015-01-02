@@ -1,4 +1,6 @@
 <?php
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class WebAdminController extends \BaseController {
 
@@ -58,4 +60,30 @@ class WebAdminController extends \BaseController {
 
 	}
 
+	public function addFeedQueue($id)
+	{
+		$site = Site::find($id);
+		if (!$site) {
+			App::abort(404);
+		}
+
+		$connection = new AMQPConnection(
+			Config::get('job.host'),
+			Config::get('job.port'),
+			Config::get('job.user'),
+			Config::get('job.password'));
+
+		$channel = $connection->channel();
+		$channel->queue_declare('feed', false, false, false, false);
+
+		$message = new AMQPMessage(json_encode($site));
+		$channel->basic_publish($message, '', 'feed');
+		$site->lastUpdate = new \DateTime();
+		$site->update();
+		$channel->close();
+		$connection->close();
+
+		return Redirect::to('/admin/')->with('message', 'Tehtävä lisätty jonoon')->with('success', true);
+
+	}
 }
