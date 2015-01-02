@@ -3,6 +3,7 @@
     <tr>
         <th>Otsikko</th>
         <th>Viimeinen tarkastus</th>
+        <th>Tarkastuskertoja</th>
         <th>Sisältömuutokset</th>
         <th>Linkki</th>
     </tr>
@@ -12,6 +13,7 @@
             <tr>
                 <td>{{ post.title }}</td>
                 <td>{{ post.updated_at }}</td>
+                <td>{{ post.checkCount }}</td>
                 <td>{{ post.modificationCount }}</td>
                 <td><a href="{{ post.url }}" alt="{{ post.content }}" target="_blank">{{ post.url }}</a></td>
             </tr>
