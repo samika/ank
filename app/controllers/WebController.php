@@ -37,21 +37,43 @@ class WebController extends \BaseController {
 	{
 		$postVersions = [];
 		$post = Post::find($id);
-		$tmp = PostVersion::where('post', '=', $id)->get();
-		foreach ($tmp as $postVersion) {
-			$postVersions[] = $postVersion;
+		$postVersions = PostVersion::where('post', '=', $id)->get();
+		$diffs = [];
+		$old = null;
+		foreach ($postVersions as $postVersion) {
+			if ($old) {
+				$diffs[] = [
+					'content' => $this->getDiffMarkup($old->content, $postVersion->content),
+					'dates' => [
+						'old' => $old->storedAt,
+						'new' => $postVersion->storedAt,
+					],
+				];
+			}
+			$old = $postVersion;
 		}
 		$site = Site::find($post->site);
+
+		return View::make('post', [
+			'post' => $post,
+			'site'	=> $site,
+			'diffs'  => $diffs,
+		]);
+
+	}
+
+	protected function getDiffMarkup($version1, $version2)
+	{
 		$differ = new Differ();
 
-		$diff = $differ->diff($postVersions[$versions[0]]->content, $postVersions[$versions[1]]->content);
+		$diff = $differ->diff($version1, $version2);
 		$lines = explode("\n", $diff);
 		$diff = '';
 		foreach ($lines as $i => $line) {
 			$span = '';
-			if (strpos($line,'+') === 0) {
+			if (strpos($line,"+\t") === 0) {
 				$span = '<span class="bg-success">';
-			} elseif (strpos($line,'-') === 0) {
+			} elseif (strpos($line,"-\t") === 0) {
 				$span = '<span class="bg-danger">';
 			}
 			$diff .= $span.$line;
@@ -60,12 +82,6 @@ class WebController extends \BaseController {
 			}
 			$diff .= PHP_EOL;
 		}
-
-		return View::make('post', [
-			'post' => $post,
-			'site'	=> $site,
-			'diff'  => $diff,
-		]);
-
+		return $diff;
 	}
 }
