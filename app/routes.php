@@ -40,6 +40,8 @@ Route::post('/login', function()
 
 Route::group(['prefix' => '/admin', 'before' => 'auth'], function() {
 	Route::get('/', 'WebAdminController@index');
+	Route::get('/site', 'WebAdminController@editSite');
+	Route::get('/site/{id}/', 'WebAdminController@editSite');
 });
 
 

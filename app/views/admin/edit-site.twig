@@ -1,0 +1,51 @@
+{% extends "admin/layout.twig" %}
+
+{% block content %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Muokkaa blogia</h1>
+
+        <div class="row">
+            {{ message }}
+            <form method="POST">
+                <input type="hidden" name="_id" value="{{ site.id }}">
+                <div class="form-group">
+                    <label for="name">Nimi</label><br/>
+                    <input type="text" name="name" value="{{ site.name }}">
+                </div>
+                <div class="form-group">
+                    <label for="area">Vaalipiiri</label><br/>
+                    <input type="text" name="area" value="{{ site.area }}">
+                </div>
+                <div class="form-group">
+                    <label for="area">Puolue</label><br/>
+                    <input type="text" name="area" value="{{ site.party }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="number">Numero</label><br/>
+                    <input type="text" name="number" pattern="/^([0-9]+)$/" value="{{ site.number }}">
+                </div>
+                <div class="form-group">
+                    <label for="url">Url</label><br/>
+                    <input type="text" name="url" value="{{ site.url }}">
+                </div>
+                <div class="form-group">
+                    <label for="rssUrl">rssUrl</label><br/>
+                    <input type="text" name="rssUrl" value="{{ site.rssUrl }}">
+                </div>
+                <div class="form-group">
+                    <label for="xpath">Alusta (wordpress|drupal|joomla..)</label><br/>
+                    <input type="text" name="platform" value="{{ site.platform }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="xpath">xpath</label><br/>
+                    <input type="text" name="xpath" value="{{ site.xpath }}">
+                </div>
+
+                <input type="submit">
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

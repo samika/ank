@@ -13,4 +13,24 @@ class WebAdminController extends \BaseController {
 		return View::make('admin/index', ['sites' => $sites]);
 	}
 
+	/**
+	 * Edit site
+	 *
+	 * @return Response
+	 */
+	public function editSite($id=null)
+	{
+		if ($id == null) {
+			$site = new Site();
+		} else {
+			$site = Site::find($id);
+		}
+
+		if (!$site) {
+			App::abort(404);
+		}
+
+		return View::make('admin/edit-site', ['site' => $site]);
+	}
+
 }
