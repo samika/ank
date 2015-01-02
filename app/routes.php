@@ -12,6 +12,8 @@ Route::filter('authProducer', function() {
 	}
 });
 
+// public site routes
+Route::get('/', 'WebController@index');
 
 // Public routes.
 Route::get('/api/v1/site', 'SiteController@index');
@@ -19,7 +21,7 @@ Route::get('/api/v1/site/{id}', 'SiteController@show');
 Route::get('/api/v1/post-version', 'PostController@index');
 Route::get('/api/v1/post-version/{id}', 'PostController@show');
 
-// Routes that requires authentication 
+// Routes that requires authentication
 Route::group(['prefix' => 'api/v1', 'before' => 'authProducer'], function()
 {
 	Route::resource('post', 'PostController');
