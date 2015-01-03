@@ -45,6 +45,7 @@ class PostCommand extends Command {
 
 		$posts = Post::whereNotNull('url')
 			->where('nextCheckAt', '<', $updateDt)
+			->take(30)
 			->get();
 
 		print $posts->count() . ' Entries will be added to queue' . PHP_EOL;
@@ -73,7 +74,7 @@ class PostCommand extends Command {
 			));
 			$channel->basic_publish($message, '', 'post');
 			$post->lastUpdate = $now;
-			$minutes = pow(2, max([1,min([11, $post->checkCount])]));
+			$minutes = pow(5, max([1,min([11, $post->checkCount])]));
 			$post->nextCheckAt = new \DateTime("+{$minutes} minutes");
 			$post->update();
 		}
