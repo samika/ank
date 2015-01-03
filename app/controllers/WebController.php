@@ -76,6 +76,15 @@ class WebController extends \BaseController {
 		]);
 	}
 
+	public function viewSitesByArea($area)
+	{
+		$sites = Site::where('area', '=', $area)->get();
+		return View::make('area', [
+			'sites' => $sites,
+			'area' => $area,
+		]);
+	}
+
 	public function diff($id, $versions = [0,1])
 	{
 		$postVersions = [];

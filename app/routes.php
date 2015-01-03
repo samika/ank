@@ -75,5 +75,6 @@ Route::post('/api/v1/auth', function() {
 // public site routes
 Route::get('/', 'WebController@index');
 Route::get('/site/{id}/', 'WebController@site');
+Route::get('/a/{area}/', 'WebController@viewSitesByArea');
 Route::get('/diff/{id}/', 'WebController@diff');
 Route::get('/search', 'WebController@search');
