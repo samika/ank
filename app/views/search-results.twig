@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Otsikko</th>
+        <th>Linkki</th>
+        <th>Tallennettu</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for row in result %}
+            <tr>
+                <td><a href="/site/{{ row.site }}/">{{ row.siteName }}</a>&gt; <a href="/diff/{{ row.post }}/">{{ row['title'] }}</a></td>
+                <td><a href="{{ row.url }}" target="_blank">{{ row.url}}</a></td>
+                <td>{{ row.storedAt }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -36,14 +36,44 @@ class WebController extends \BaseController {
 	public function search()
 	{
 
-		$query = Input::only('q');
+		$query = Input::get('q');
+
 		// How gay is this format?
 		$search['body']['query']['multi_match']['query'] = $query;
 		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'rawContent', 'title', 'url'];
 		$search['size'] = 50;
 		$search['index'] = 'post-version';
-		var_dump($search);
-		print Es::search($search);
+		$result =  [];
+		$message = "";
+
+		try {
+			$resultEs = Es::search($search);
+		} catch (\Exception $e) {
+			$message = 'Haku epäonnistui';
+		}
+
+
+		$result = [];
+		$uniquePosts = [];
+
+		foreach ($resultEs as $row) {
+			if (isset($row['hits'])) {
+				foreach ($row['hits'] as $match) {
+					if (!in_array($match['_source']['post'], $uniquePosts)) {
+						$match['_source']['storedAt'] = $match['_source']['storedAt']['date'];
+						$result[] = $match['_source'];
+						$unigPosts[] = $match['_source']['post'];
+					}
+				}
+			}
+		}
+
+		return View::make('search', [
+			'query'	  => $query,
+			'result'  => $result,
+			'message' => $message,
+			'count'   => count($result),
+		]);
 	}
 
 	public function diff($id, $versions = [0,1])
