@@ -2,3 +2,4 @@ vendor/*
 .idea
 *.lock
 bootstrap/compiled.php
+*.env.production.php
