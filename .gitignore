@@ -3,3 +3,4 @@ vendor/*
 *.lock
 bootstrap/compiled.php
 *.env.production.php
+public/ca.pem
