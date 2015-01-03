@@ -1,7 +1,6 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <h1 class="page-header">Haku</h1>
         {% if query %}
         <p class="bg-info">{{ count }} osumaa haulle "{{ query }}".</p>
@@ -14,5 +13,4 @@
         <div class="row">
             {% include "search-results.twig" %}
         </div>
-    </div>
 {% endblock %}
