@@ -13,7 +13,7 @@
                     <div class="message alert-danger">{{ message }}</div>
                 {% endif %}
             {%  endif %}
-            <form method="POST">
+            <form method="POST" action="/admin/site">
                 <input type="hidden" name="_id" value="{{ site.id }}">
                 <div class="form-group">
                     <label for="name">Nimi</label><br/>
