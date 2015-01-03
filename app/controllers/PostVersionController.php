@@ -62,8 +62,8 @@ class PostVersionController extends \BaseController {
 
 		$postVersion->storedAt = new \DateTime();
 		$postVersion->updatedAt = null;
-		//Fix this when we have authentication middleware
-		$post->producedBy = 'admin';
+
+		$post->producedBy = JWTAuth::parseToken()->toUser()->username;
 
 		// Update the post with current values.
 		$postVersion->save();
