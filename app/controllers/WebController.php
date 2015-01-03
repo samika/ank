@@ -30,6 +30,7 @@ class WebController extends \BaseController {
 		return View::make('site', [
 			'posts' => $posts,
 			'site'	=> $site,
+			'title' => $site->name . ' | ' . $site->party . ' | '. $site->area,
 		]);
 	}
 
@@ -73,6 +74,7 @@ class WebController extends \BaseController {
 			'result'  => $result,
 			'message' => $message,
 			'count'   => count($result),
+			'title'	  => $query,
 		]);
 	}
 
@@ -82,6 +84,7 @@ class WebController extends \BaseController {
 		return View::make('area', [
 			'sites' => $sites,
 			'area' => $area,
+			'title' => $area,
 		]);
 	}
 	public function viewSitesByParty($party)
@@ -90,6 +93,7 @@ class WebController extends \BaseController {
 		return View::make('party', [
 			'sites' => $sites,
 			'party' => $party,
+			'title' => $party,
 		]);
 	}
 
@@ -119,6 +123,7 @@ class WebController extends \BaseController {
 			'post' => $post,
 			'site'	=> $site,
 			'diffs'  => $diffs,
+			'title' => $site->name . ' | ' . $site->party . ' | '. $site->area . ' | ' . $post->title,
 		]);
 
 	}
