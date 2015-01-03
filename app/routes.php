@@ -77,5 +77,6 @@ Route::get('/', 'WebController@index');
 Route::get('/site/{id}/', 'WebController@site');
 Route::get('/a/{area}/', 'WebController@viewSitesByArea');
 Route::get('/p/{party}/', 'WebController@viewSitesByParty');
+Route::get('/requeue/{id}/', 'WebController@requeuePost');
 Route::get('/diff/{id}/', 'WebController@diff');
 Route::get('/search', 'WebController@search');

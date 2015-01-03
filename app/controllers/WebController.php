@@ -1,5 +1,8 @@
 <?php
+
 use SebastianBergmann\Diff\Differ;
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class WebController extends \BaseController {
 
@@ -126,6 +129,51 @@ class WebController extends \BaseController {
 			'title' => $site->name . ' | ' . $site->party . ' | '. $site->area . ' | ' . $post->title,
 		]);
 
+	}
+
+	public function requeuePost($id) {
+		$post = Post::find($id);
+		if (!$post) {
+			App::abort(404);
+		}
+		$site = Site::find($post->site);
+		if (!$site) {
+			App::abort(404);
+		}
+
+		$post->nextCheckAt ? $next = $post->nextCheckAt : $next = new DateTime();
+		if ($next < new Datetime('+30 minutes') && $next > new Datetime('-30 minutes')) {
+			return Redirect::to('/site/'. $post->site . '/')->with('message', 'Ei lisätty jonoon')->with('success', false);
+		}
+
+		$post->nextCheckAt = new \DateTime('-1 seconds');;
+		// We do not increase the count for purpose.
+		$post->update();
+
+		$connection = new AMQPConnection(
+			Config::get('job.host'),
+			Config::get('job.port'),
+			Config::get('job.user'),n
+			Config::get('job.password'));
+
+		$channel = $connection->channel();
+		$channel->queue_declare('post', false, false, false, false);
+
+		$message = new AMQPMessage(
+			json_encode(
+				[
+					'url' => $post->url,
+					'checksum' => $post->checksum,
+					'post' => $post->_id,
+					'site' => $post->site,
+					'xpath' => $site->xpath,
+				]
+			));
+
+		$channel->basic_publish($message, '', 'post');
+		$channel->close();
+		$connection->close();
+		return Redirect::to('/site/'. $post->site . '/')->with('message', 'Postaus lisätty tarkastusjonoon')->with('success', true);
 	}
 
 	protected function getDiffMarkup($version1, $version2)
