@@ -84,6 +84,15 @@ class WebController extends \BaseController {
 			'area' => $area,
 		]);
 	}
+	public function viewSitesByParty($party)
+	{
+		$sites = Site::where('party', '=', $party)->get();
+		return View::make('party', [
+			'sites' => $sites,
+			'party' => $party,
+		]);
+	}
+
 
 	public function diff($id, $versions = [0,1])
 	{

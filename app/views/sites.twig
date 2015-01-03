@@ -12,8 +12,8 @@
         {% for site in sites %}
             <tr>
                 <td><a href="/site/{{ site._id }}/">{{ site.name }}</a></td>
-                <td><a hre="/a/{{ site.area }}"/>{{ site.area }}</a></td>
-                <td><a hre="/a/{{ site.party }}"/>{{ site.party }}</a></td>
+                <td><a href="/a/{{ site.area }}"/>{{ site.area }}</a></td>
+                <td><a href="/p/{{ site.party }}"/>{{ site.party }}</a></td>
                 <td>{{ site.updated_at }}</td>
                 <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
             </tr>

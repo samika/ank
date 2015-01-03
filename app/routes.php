@@ -76,5 +76,6 @@ Route::post('/api/v1/auth', function() {
 Route::get('/', 'WebController@index');
 Route::get('/site/{id}/', 'WebController@site');
 Route::get('/a/{area}/', 'WebController@viewSitesByArea');
+Route::get('/p/{party}/', 'WebController@viewSitesByParty');
 Route::get('/diff/{id}/', 'WebController@diff');
 Route::get('/search', 'WebController@search');
