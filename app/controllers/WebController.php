@@ -48,7 +48,8 @@ class WebController extends \BaseController {
 		$search['size'] = 50;
 		$search['index'] = 'post-version';
 		$message = "";
-
+		$resultEs = [];
+		
 		try {
 			$resultEs = Es::search($search);
 		} catch (\Exception $e) {
