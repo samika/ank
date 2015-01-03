@@ -52,7 +52,7 @@ class PostController extends \BaseController {
 		}
 
 		if (Post::where('url','=',$post->url)->count() !== 0) {
-			App::abort(208);
+			return Result::make('', 208);
 		}
 
 		$post->lastCheckAt = null;

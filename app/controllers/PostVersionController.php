@@ -57,7 +57,7 @@ class PostVersionController extends \BaseController {
 
 		if (PostVersion::where('url','=',$postVersion->url)
 				->where('checksum', '=', $postVersion->checksum)->get()->count() !== 0) {
-			return App::abort(208);
+			return Result::make('', 208);
 		}
 
 		$postVersion->storedAt = new \DateTime();
