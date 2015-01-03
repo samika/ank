@@ -47,7 +47,6 @@ class WebController extends \BaseController {
 		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'rawContent', 'title', 'url'];
 		$search['size'] = 50;
 		$search['index'] = 'post-version';
-		$result =  [];
 		$message = "";
 
 		try {
@@ -103,7 +102,6 @@ class WebController extends \BaseController {
 
 	public function diff($id, $versions = [0,1])
 	{
-		$postVersions = [];
 		$post = Post::find($id);
 		$postVersions = PostVersion::where('post', '=', $id)->get();
 		$diffs = [];
