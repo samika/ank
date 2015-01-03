@@ -83,6 +83,8 @@ class PostVersionController extends \BaseController {
 				'site' 		=> $site->_id,
 				'storedAt'	=> $postVersion->storedAt,
 				'url'		=> $post->url,
+				'area'		=> $site->area,
+				'party'		=> $site->party,
 			],
 			'index' 	=> 'post-version',
 			'type' 		=> 'post-version',
