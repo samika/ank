@@ -84,8 +84,8 @@ class PostVersionController extends \BaseController {
 				'storedAt'	=> $postVersion->storedAt,
 				'url'		=> $post->url,
 			],
-			'index' 	=> 'postVersionIndex',
-			'type' 		=> 'postVersion',
+			'index' 	=> 'post-version',
+			'type' 		=> 'post-version',
 			'id' 		=> $postVersion->_id,
 		];
 
