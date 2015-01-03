@@ -1,0 +1,16 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header"><a href="/site/{{ site._id }}/" class="glyphicon glyphicon-chevron-left"></a>Muutoksen tarkastelu</h1>
+        <pre>
+{{ post.content }}
+        </pre>
+{% for diff in diffs %}
+        <h2>{{ diff["dates"]["old"] }} vs {{ diff["dates"]["new"] }}</h2>
+        <pre>
+{{ diff["content"] |raw}}
+        </pre>
+{% endfor %}
+    </div>
+{% endblock %}
