@@ -1,0 +1,49 @@
+{% block content %}
+            {% if message %}
+                {% if success == true%}
+                    <div class="message alert-success">{{ message }}</div>
+                {% endif %}
+                {% if success == false %}
+                    <div class="message alert-danger">{{ message }}</div>
+                {% endif %}
+            {%  endif %}
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">Nimi</label><br/>
+                    <input type="text" name="name" size="64" placeholder="Etunimi Sukunimi" value="{{ proposedSite['name'] }}">
+                </div>
+                <div class="form-group">
+                    <label for="area">Vaalipiiri</label><br/>
+                    <select name="area">
+                        {% for area in content['areas'] %}
+                            <option value="{{ area }}">{{ area }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="party">Puolue</label><br/>
+                    <select name="party">
+                        {% for key, party in content['parties'] %}
+                        <option value="{{ key }}">{{ key }} - {{ party }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="url">Blogin osoite</label><br/>
+                    <input type="text" name="url" size="64" placeholder="http://wwww.ehdokasjotain.fi" value="{{ proposedSite['url'] }}">
+                </div>
+                <div class="form-group">
+                    <label for="rss">RSS -syötteen osoite</label><br/>
+                    <input type="text" name="rss" size="64"  placeholder="http://wwww.ehdokasjotain.fi/feed/"value="{{ proposedSite['rss'] }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="source">Lähde ehdokkaaksi ryhtymiseen, esim puolueen kotisivut (web-osoite).</label><br/>
+                    <input type="text" name="source" size="64"  placeholder="http://wwww.puolue.fi/ehdokkaat/" value="{{ proposedSite['source']}}">
+                </div>
+
+                <input type="submit" value="Tallenna" class="btn-primary">
+
+            </form>
+{% endblock %}

@@ -151,7 +151,7 @@ class WebController extends \BaseController {
 		$connection = new AMQPConnection(
 			Config::get('job.host'),
 			Config::get('job.port'),
-			Config::get('job.user'),n
+			Config::get('job.user'),
 			Config::get('job.password'));
 
 		$channel = $connection->channel();
@@ -172,6 +172,41 @@ class WebController extends \BaseController {
 		$channel->close();
 		$connection->close();
 		return Redirect::to('/site/'. $post->site . '/')->with('message', 'Postaus lisätty tarkastusjonoon')->with('success', true);
+	}
+
+	public function addSite()
+	{
+		$keys = ['url', 'rss', 'name', 'party', 'area', 'source' ];
+		$required = ['url', 'name', 'party', 'area', 'source' ];
+		$isValid = true;
+		$message = Session::get('message');
+
+		$all = Input::only($keys);
+
+		if (Request::isMethod('POST')) {
+
+			foreach ($required as $key) {
+				if (!isset($all[$key]) || empty($all[$key])) {
+					$isValid = false;
+					continue;
+				}
+			}
+
+			if ($isValid) {
+				ProposedSite::create($all);
+				return Redirect::to('/add-site/')->with('message', 'Tallennus onnistui.')->with('success', true);
+			} else {
+				$message = "Tallennus epäonnistui, tarkista tiedot.";
+			}
+		}
+
+		return View::make('add-site', [
+			'proposedSite' => $all,
+			'title' => 'Lisää blogi järjestelmään',
+			'message' => $message,
+			'success' => $isValid,
+		]);
+
 	}
 
 	protected function getDiffMarkup($version1, $version2)

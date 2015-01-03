@@ -80,3 +80,5 @@ Route::get('/p/{party}/', 'WebController@viewSitesByParty');
 Route::get('/requeue/{id}/', 'WebController@requeuePost');
 Route::get('/diff/{id}/', 'WebController@diff');
 Route::get('/search', 'WebController@search');
+Route::get('/add-site', 'WebController@addSite');
+Route::post('/add-site', 'WebController@addSite');

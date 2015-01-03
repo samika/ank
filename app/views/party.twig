@@ -1,6 +1,6 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-        <h1 class="page-header">{{ party }}</h1>
+        <h1 class="page-header">{{ content['parties'][party] }}</h1>
         {% include "sites.twig" %}
 {% endblock %}
