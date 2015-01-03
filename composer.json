@@ -10,7 +10,8 @@
 		"videlalvaro/php-amqplib": "~2.4",
 		"tymon/jwt-auth": "0.3.*",
 		"rcrowe/twigbridge": "0.6.*",
-		"sebastian/diff": "~1.2"
+		"sebastian/diff": "~1.2",
+		"shift31/laravel-elasticsearch": "~1.1"
 	},
 	"autoload": {
 		"classmap": [

@@ -33,6 +33,17 @@ class WebController extends \BaseController {
 		]);
 	}
 
+	public function search()
+	{
+		$query = Input::only('q');
+		// How gay is this format?
+		$search['body']['query']['multi_match']['query'] = $query;
+		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'rawContent', 'title', 'url'];
+		$search['size'] = 50;
+		$search['index'] = 'postVersion';
+
+	}
+
 	public function diff($id, $versions = [0,1])
 	{
 		$postVersions = [];
@@ -84,4 +95,6 @@ class WebController extends \BaseController {
 		}
 		return $diff;
 	}
+
+
 }

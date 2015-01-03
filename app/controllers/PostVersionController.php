@@ -57,8 +57,7 @@ class PostVersionController extends \BaseController {
 
 		if (PostVersion::where('url','=',$postVersion->url)
 				->where('checksum', '=', $postVersion->checksum)->get()->count() !== 0) {
-
-			App::abort(208);
+			return App::abort(208);
 		}
 
 		$postVersion->storedAt = new \DateTime();
@@ -72,6 +71,29 @@ class PostVersionController extends \BaseController {
 		$post->content = $postVersion->content;
 		// $post->title = $postVersion->title; - Lets have original for now.
 		$post->save();
+
+		$site = Site::find($post->site);
+		$search = [
+			'body'=> [
+				'siteName' 	=> $site->name,
+				'title'		=> $postVersion->title,
+				'content'	=> $postVersion->content,
+				'rawContent' => $postVersion->rawContent,
+				'post' 		=> $post->_id,
+				'site' 		=> $site->_id,
+				'storedAt'	=> $postVersion->storedAt,
+				'url'		=> $post->url,
+			],
+			'index' 	=> 'postVersionIndex',
+			'type' 		=> 'postVersion',
+			'id' 		=> $postVersion->_id,
+		];
+
+		try {
+			Es::index($search);
+		} catch (\Exception $e) {
+			// Just suck it, until we have error handling done properly.
+		}
 
 		return Response::make('', 201);
 	}
@@ -129,5 +151,8 @@ class PostVersionController extends \BaseController {
 	{
 		//
 	}
+
+
+
 
 }

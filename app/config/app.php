@@ -124,6 +124,7 @@ return array(
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Tymon\JWTAuth\JWTAuthServiceProvider',
 		'TwigBridge\ServiceProvider',
+		'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
 	),
 
 	/*
