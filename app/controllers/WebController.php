@@ -219,9 +219,9 @@ class WebController extends \BaseController {
 		$diff = '';
 		foreach ($lines as $i => $line) {
 			$span = '';
-			if (strpos($line,"+\t") === 0) {
+			if (strpos($line,"+") === 0) {
 				$span = '<span class="bg-success">';
-			} elseif (strpos($line,"-\t") === 0) {
+			} elseif (strpos($line,"-") === 0) {
 				$span = '<span class="bg-danger">';
 			}
 			$diff .= $span.$line;
