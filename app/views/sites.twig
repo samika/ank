@@ -4,7 +4,7 @@
         <th>Sivusto</th>
         <th>Piiri</th>
         <th>Puolue</th>
-        <th>Viimeinen tarkastus</th>
+        <th>Tarkastettu</th>
         <th>Linkki</th>
     </tr>
     </thead>
@@ -14,7 +14,7 @@
                 <td><a href="/site/{{ site._id }}/">{{ site.name }}</a></td>
                 <td><a href="/a/{{ site.area }}"/>{{ site.area }}</a></td>
                 <td><a href="/p/{{ site.party }}"/>{{ site.party }}</a></td>
-                <td>{{ site.updated_at }}</td>
+                <td>{{ site.updated_at|date("m.d.Y h:i", "Europe/Helsinki") }}</td>
                 <td><a href="{{ site.url }}" target="_blank">{{ site.url }}</a></td>
             </tr>
         {% endfor %}

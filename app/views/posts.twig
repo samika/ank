@@ -2,9 +2,8 @@
     <thead>
     <tr>
         <th>Otsikko</th>
-        <th>Viimeinen tarkastus</th>
-        <th>Tarkastusprioriteetti</th>
-        <th>Sisältömuutokset</th>
+        <th>Tarkastettu</th>
+        <th>Muutoksia</th>
         <th>Linkki</th>
         <th>Vihjaa muutoksesta</yh>
     </tr>
@@ -13,8 +12,7 @@
         {% for post in posts %}
             <tr>
                 <td>{{ post.title }}</td>
-                <td>{{ post.updated_at }}</td>
-                <td>{{ post.checkCount }}</td>
+                <td>{{ post.updated_at|date("m.d.Y h:i", "Europe/Helsinki") }}</td>
                 <td>
                     {% if post.modificationCount > 1 %}
                         <a href="/diff/{{ post._id }}/">{{ post.modificationCount }}</a>
