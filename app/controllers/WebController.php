@@ -13,8 +13,8 @@ class WebController extends \BaseController {
 	 */
 	public function index()
 	{
-		$sites = Site::whereNotNull('lastUpdate')->get();
-		return View::make('index', ['sites' => $sites]);
+		$posts = Post::where('modificationCount','>',0)->orderBy('storedAt','desc')->take(20)->get();
+		return View::make('index', ['posts' => $posts]);
 	}
 
 	/**
