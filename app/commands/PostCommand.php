@@ -75,7 +75,7 @@ class PostCommand extends Command {
 			));
 			$channel->basic_publish($message, '', 'post');
 			$post->lastUpdate = $now;
-			$minutes = pow(5, max([1,min([11, $post->checkCount])]));
+			$minutes = pow(2, max([5, min([11, $post->checkCount])]));
 			$post->nextCheckAt = new \DateTime("+{$minutes} minutes");
 			$post->update();
 		}

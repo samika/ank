@@ -45,7 +45,8 @@ class FeedCommand extends Command {
 
 		$sites = Site::whereNotNull('rssUrl')
 			->where('lastUpdate', '<', $updateDt)
-			->orderBy('lastUpdate','desc')
+			->orderBy('lastUpdate')
+			->take(3)
 			->get();
 
 		print $sites->count() . ' Entries will be added to queue' . PHP_EOL;
