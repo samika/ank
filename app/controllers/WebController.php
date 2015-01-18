@@ -13,7 +13,7 @@ class WebController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = Post::where('modificationCount','>',0)->orderBy('storedAt','desc')->take(20)->get();
+		$posts = Post::where('modificationCount','>',0)->orderBy('storedAt','desc')->take(100)->get();
 		return View::make('index', ['posts' => $posts]);
 	}
 
