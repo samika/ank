@@ -45,7 +45,7 @@ class WebController extends \BaseController {
 		// How gay is this format?
 		$search['body']['query']['multi_match']['query'] = $query;
 		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'title', 'url'];
-		$search['size'] = 50;
+		$search['size'] = 250;
 		$search['index'] = 'post-version';
 		$message = "";
 		$resultEs = [];
