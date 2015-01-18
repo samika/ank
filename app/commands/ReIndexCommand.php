@@ -43,8 +43,7 @@ class ReIndexCommand extends Command {
 		$updateDt = new DateTime();
 		$now = new DateTime();
 
-		$postVersions = PostVersion::whereNotNull('url')
-			->orderBy('storedAt')
+		$postVersions = PostVersion::orderBy('storedAt')
 			->get();
 		$count = $postVersions->count();
 		$this->info('Found ' . $count);
