@@ -39,47 +39,54 @@ class ReIndexCommand extends Command {
 	 */
 	public function fire()
 	{
-
-		$updateDt = new DateTime();
-		$now = new DateTime();
-
-		$postVersions = PostVersion::orderBy('storedAt')
+		$postVersions = PostVersion::orderBy('storedAt', 'asc')
+			->whereNotNull('storedAt')
+			->take(1)
 			->get();
-		$count = $postVersions->count();
-		$this->info('Found ' . $count);
-		$i = 0;
-		foreach ($postVersions as $postVersion) {
-			$this->info('Indexing '. $i++ . ' of  ' . $count);
-			if (!$postVersion->post) {
-				$this->info("Skipping" . $postVersion);
-				continue;
-			}
-			$post = Post::find($postVersion->post);
-			$site = Site::find($post->site);
-			$search = [
-				'body'=> [
-					'siteName' 	=> $site->name,
-					'title'		=> $postVersion->title,
-					'content'	=> $postVersion->content,
-					'rawContent' => $postVersion->rawContent,
-					'post' 		=> $post->_id,
-					'site' 		=> $site->_id,
-					'storedAt'	=> $postVersion->storedAt,
-					'url'		=> $post->url,
-					'area'		=> $site->area,
-					'party'		=> $site->party,
-				],
-				'index' 	=> 'post-version',
-				'type' 		=> 'post-version',
-				'id' 		=> $postVersion->_id,
-			];
 
-			$this->info('Indexing '. $i . ' of  ' . $count);
+		$dt = new \DateTime($postVersions[0]->storedAt->format('Y-m-d'));
+		$now = new \DateTime();
 
-			try {
-				Es::index($search);
-			} catch (\Exception $e) {
-				$this->info($e);
+		while ($dt < $now) {
+
+			$i = 0;
+			$end = new \DateTime($dt->format('Y-m-d').' 23:59:59');
+			$postVersions = PostVersion::where('storedAt', '<=', $end)
+				->where('storedAt', '>=', $dt)->get();
+
+			$dt->add(new DateInterval('P1D'));
+
+			foreach ($postVersions as $postVersion) {
+				$this->info('Indexing ' . $dt->format('Y.m.d') . '#' . $i++);
+				if (!$postVersion->post) {
+					$this->info("Skipping" . $postVersion);
+					continue;
+				}
+				$post = Post::find($postVersion->post);
+				$site = Site::find($post->site);
+				$search = [
+					'body' => [
+						'siteName' => $site->name,
+						'title' => $postVersion->title,
+						'content' => $postVersion->content,
+						'rawContent' => $postVersion->rawContent,
+						'post' => $post->_id,
+						'site' => $site->_id,
+						'storedAt' => $postVersion->storedAt,
+						'url' => $post->url,
+						'area' => $site->area,
+						'party' => $site->party,
+					],
+					'index' => 'post-version',
+					'type' => 'post-version',
+					'id' => $postVersion->_id,
+				];
+
+				try {
+					Es::index($search);
+				} catch (\Exception $e) {
+					$this->info($e);
+				}
 			}
 		}
 	}
