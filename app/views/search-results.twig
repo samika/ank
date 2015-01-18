@@ -1,6 +1,8 @@
 <table class="table table-striped">
     <thead>
     <tr>
+        <th>Puolue</th>
+        <th>Ehdokas</th>
         <th>Otsikko</th>
         <th>Linkki</th>
         <th>Tallennettu</th>
@@ -9,9 +11,11 @@
     <tbody>
         {% for row in result %}
             <tr>
-                <td><a href="/site/{{ row.site }}/">{{ row.siteName }}</a>&gt; <a href="/diff/{{ row.post }}/">{{ row['title'] }}</a></td>
+                <td>{{ row.party }}</td>
+                <td><a href="/site/{{ row.site }}/">{{ row.siteName }}</a></td>
+                <td><a href="/diff/{{ row.post }}/">{{ row['title'] }}</a></td>
                 <td><a href="{{ row.url }}" target="_blank">{{ row.url}}</a></td>
-                <td>{{ row.storedAt }}</td>
+                <td>{{ row.storedAt |date('d.m.Y') }}</td>
             </tr>
         {% endfor %}
     </tbody>
