@@ -66,7 +66,7 @@ class WebController extends \BaseController {
 					if (!in_array($match['_source']['post'], $uniquePosts)) {
 						$match['_source']['storedAt'] = $match['_source']['storedAt']['date'];
 						$result[] = $match['_source'];
-						$unigPosts[] = $match['_source']['post'];
+						$uniquePosts[] = $match['_source']['post'];
 					}
 				}
 			}
