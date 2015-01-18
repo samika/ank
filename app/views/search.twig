@@ -1,5 +1,9 @@
 {% extends "layout.twig" %}
 
+{% block head %}
+<script src="/js/Chart.min.js"></script>
+{% endblock %}
+
 {% block content %}
         <h1 class="page-header">Haku</h1>
         {% if query %}
@@ -11,6 +15,10 @@
             <input type="submit" value="Hae">
         </form>
         <div class="row">
+            <canvas id="searchResultChart" height="200"></canvas>
+        </div>
+        <div class="row">
             {% include "search-results.twig" %}
         </div>
+
 {% endblock %}

@@ -16,3 +16,11 @@
         {% endfor %}
     </tbody>
 </table>
+<script>
+    $( document ).ready(function() {
+        var data = {{ chartData|raw }};
+        var ctx = $('#searchResultChart').get(0).getContext('2d');
+        var myPieChart = new Chart(ctx).Pie(data,{});
+    });
+
+</script>

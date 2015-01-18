@@ -72,9 +72,22 @@ class WebController extends \BaseController {
 			}
 		}
 
+		$partyColor = Config::get('content.partyColor');
+		$chartData = [];
+		foreach ($result as $row) {
+			if (isset($chartData[$row['party']])) {
+				$chartData[$row['party']]['value']++;
+			} else {
+				$chartData[$row['party']]['value'] = 1;
+				$chartData[$row['party']]['label'] = $row['party'];
+				$chartData[$row['party']]['color'] = $partyColor[$row['party']];
+			}
+		}
+
 		return View::make('search', [
 			'query'	  => $query,
 			'result'  => $result,
+			'chartData' => json_encode(array_values($chartData)),
 			'message' => $message,
 			'count'   => count($result),
 			'title'	  => $query,
