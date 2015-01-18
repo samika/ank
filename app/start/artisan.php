@@ -14,3 +14,4 @@
 Artisan::add(new FeedCommand());
 Artisan::add(new PostCommand());
 Artisan::add(new UserCommand());
+Artisan::add(new ReIndexCommand());
