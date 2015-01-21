@@ -43,7 +43,8 @@ class WebController extends \BaseController {
 		$query = Input::get('q');
 
 		// How gay is this format?
-		$search['body']['query']['multi_match']['query'] = $query;
+        $search['body']['query']['multi_match']['query'] = $query;
+        $search['body']['query']['multi_match']['analyzer'] = 'finnish';
 		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'title', 'url'];
 		$search['size'] = 250;
 		$search['index'] = 'post-version';
