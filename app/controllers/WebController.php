@@ -44,7 +44,7 @@ class WebController extends \BaseController {
 
 		// How gay is this format?
         $search['body']['query']['multi_match']['query'] = $query;
-        $search['body']['query']['multi_match']['analyzer'] = 'finnish';
+        #$search['body']['query']['multi_match']['analyzer'] = 'finnish';
 		$search['body']['query']['multi_match']['fields'] = ['siteName', 'content', 'title', 'url'];
 		$search['size'] = 250;
 		$search['index'] = 'post-version';
@@ -76,12 +76,13 @@ class WebController extends \BaseController {
 		$partyColor = Config::get('content.partyColor');
 		$chartData = [];
 		foreach ($result as $row) {
+			$color = isset($partyColor[$row['party']]) ? $partyColor[$row['party']] : '#323232';
 			if (isset($chartData[$row['party']])) {
 				$chartData[$row['party']]['value']++;
 			} else {
 				$chartData[$row['party']]['value'] = 1;
 				$chartData[$row['party']]['label'] = $row['party'];
-				$chartData[$row['party']]['color'] = $partyColor[$row['party']];
+				$chartData[$row['party']]['color'] = $color;
 			}
 		}
 

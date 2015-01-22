@@ -41,11 +41,14 @@ class PostVersionController extends \BaseController {
 			if ($assoc) {
 				$postVersion = new PostVersion($assoc);
 			}
+		} else {
+			Log::error("empty json!", print_r($jsonString,true));
+			App::abort(400);
 		}
 
 		$post = Post::find($postVersion->post);
 		if (!$post) {
-			App:abort(400);
+			App::abort(400);
 		}
 
 		if (!$postVersion || $postVersion->checksum !== sha1($postVersion->content)) {

@@ -11,7 +11,12 @@ Route::filter('authProducer', function() {
 	if (!$token) {
 		return Response::make('' ,401);
 	}
-	$user = $token->toUser();
+	
+	try {
+		$user = $token->toUser();
+	} catch (\Exception $e) {
+		 return Response::make('' ,401);
+	}
 	if (!$user || $user->role !== "Producer") {
 		return Response::make('' ,401);
 	}
